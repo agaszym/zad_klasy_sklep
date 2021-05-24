@@ -1,0 +1,214 @@
+import time
+
+class Sklep_Narzedziowy:
+    def __init__(self):
+        print("Podaj dostępną kwotę pieniężną")
+        self.portfel = int(input())
+        self.produkty = ["wiertarka", "młotek", "lina"]
+        self.lina = 4
+        self.lina_cena = 10
+        self.wiertarka = 5
+        self.wiertarka_cena = 120
+        self.mlotek = 3
+        self.mlotek_cena = 35
+        
+    def menu(self):
+        while True:
+            print("Co chciałbyś zrobić?")
+            print("1- wyświetl dostępne produkty")
+            print("2- zakup przedmiotu")
+            print("3- Zakończ zakupy")
+            self.odp = int(input())
+            if self.odp == 1:
+                print("Dostępne produkty:")
+                print(self.produkty)
+            elif self.odp == 2:
+                print("Jaki produk chcesz zakupić? M- młotek, W- wiertarka, L-lina")
+                self.wybor = input()
+                self.wybor = (self.wybor.upper())
+                if self.wybor == "M":
+                    self.zakup_mlotka()
+                elif self.wybor == "W":
+                    self.zakup_wiertarki()
+                elif self.wybor == "L":
+                    self.zakup_liny()
+                else:
+                    print("Błędny znak. Spróbuj ponownie")
+                    self.wybor = input()
+                    self.wybor = (self.wybor.upper())
+            else:
+                print("Dziękujemy za zakupy, do widzenia i zapraszmay ponownie")
+                break
+                
+    def zakup_liny(self):
+        print("Koszt liny wynosi:", self.lina_cena)
+        print("aktualny stan portfela:", self.portfel)
+        
+        if self.portfel >= self.lina_cena and self.lina > 0:
+            print("Proszę podać banknot jakim będzie wykonana płatność")
+            self.banknot = int(input())
+            
+            while self.banknot > self.portfel:
+                print("Nie masz tyle pieniędzy! Prosze o podanie właściwej wartości banknotu")
+                self.banknot = int(input())
+                
+            print("Trwa przygotowywanie zamówienia...")
+            for i in range(3, 0, -1):
+                print(i)
+                
+            print("Twoje zamówienie jest już gotowe!")
+            if self.banknot == self.lina_cena:
+                self.portfel = self.portfel - self.lina_cena
+                self.lina = self.lina - 1
+                
+                if self.lina == 0:
+                    self.produkty.remove("lina")
+                    
+                print("Brak reszty. Zamówienie przekazane.")
+                print("Pozostała ilość pieniędzy:", self.portfel)
+                print("wciśnij dowolny przycisk aby powrócić do menu")
+                input()
+                
+            elif self.banknot > self.lina_cena:
+                self.reszta = self.banknot - self.lina_cena
+                print("Należna reszta w wysokości", self.reszta , "zł została umiszczona na bonie do wykorzystania podczas zakupów w inny dzień")
+                self.portfel = self.portfel - self.banknot
+                self.lina = self.lina - 1
+                
+                if self.lina == 0:
+                    self.produkty.remove("lina")
+                print("Pozostała ilość pieniędzy:", self.portfel)
+                print("wciśnij dowolny przycisk aby powrócić do menu")
+                input()
+                
+            else:
+                print("podany banknot ma mniejsza wartość od ceny produktu.")
+                print("Transakcja odrzucona. Odebranie zamówienia niemożliwe.")
+                print("wciśnij dowolny przycisk aby powrócić do menu")
+                input()
+                
+        elif self.lina == 0:
+            print("Przepraszamy, nie ma już tego produktu na stanie")
+            print("wciśnij dowolny przycisk aby powrócić do menu")
+            input()
+            
+        elif self.portfel < self.lina_cena:
+            print("Niestety nie stać cię na ten przedmiot")
+            print("wciśnij dowolny przycisk aby powrócić do menu")
+            input()
+            
+    def zakup_wiertarki(self):
+                print("Koszt wiertarki wynosi:", self.wiertarka_cena)
+                print("aktualny stan portfela:", self.portfel)
+                
+                if self.portfel >= self.wiertarka_cena and self.wiertarka > 0:
+                    print("Proszę podać banknot jakim będzie wykonana płatność")
+                    self.banknot = int(input())
+                    
+                    while self.banknot > self.portfel:
+                        print("Nie masz tyle pieniędzy! Prosze o podanie właściwej wartości banknotu")
+                        self.banknot = int(input())
+                    print("Trwa przygotowywanie zamówienia...")
+                    
+                    for i in range(3, 0, -1):
+                        print(i)
+                    print("Twoje zamówienie jest już gotowe!")
+                    
+                    if self.banknot == self.wiertarka_cena:
+                        self.portfel = self.portfel - self.wiertarka_cena
+                        self.wiertarka = self.wiertarka - 1
+                        
+                        if self.wiertarka == 0:
+                            self.produkty.remove("wiertarka")
+                            
+                        print("Brak reszty. Zamówienie przekazane.")
+                        print("Pozostała ilość pieniędzy:", self.portfel)
+                        print("wciśnij dowolny przycisk aby powrócić do menu")
+                        input()
+                        
+                    elif self.banknot > self.wiertarka_cena:
+                        self.reszta = self.banknot - self.wiertarka_cena
+                        print("Należna reszta w wysokości", self.reszta , "zł została umiszczona na bonie do wykorzystania podczas zakupów w inny dzień")
+                        self.portfel = self.portfel - self.banknot
+                        self.wiertarka = self.wiertarka - 1
+                        
+                        if self.wiertarka == 0:
+                            self.produkty.remove("wiertarka")
+                        print("Pozostała ilość pieniędzy:", self.portfel)
+                        print("wciśnij dowolny przycisk aby powrócić do menu")
+                        input()
+                        
+                    else:
+                        print("podany banknot ma mniejsza wartość od ceny produktu.")
+                        print("Transakcja odrzucona. Odebranie zamówienia niemożliwe.")
+                        print("wciśnij dowolny przycisk aby powrócić do menu")
+                        input()
+                        
+                elif self.wiertarka == 0:
+                    print("Przepraszamy, nie ma już tego produktu na stanie")
+                    print("wciśnij dowolny przycisk aby powrócić do menu")
+                    input()
+                    
+                elif self.portfel < self.wiertarka_cena:
+                    print("Niestety nie stać cię na ten przedmiot")
+                    print("wciśnij dowolny przycisk aby powrócić do menu")
+                    input()
+                    
+    def zakup_mlotka(self):
+                print("Koszt młotka wynosi:", self.mlotek_cena)
+                print("aktualny stan portfela:", self.portfel)
+                
+                if self.portfel >= self.mlotek_cena and self.mlotek > 0:
+                    print("Proszę podać banknot jakim będzie wykonana płatność")
+                    self.banknot = int(input())
+                    
+                    while self.banknot > self.portfel:
+                        print("Nie masz tyle pieniędzy! Prosze o podanie właściwej wartości banknotu")
+                        self.banknot = int(input())
+                    print("Trwa przygotowywanie zamówienia...")
+                    
+                    for i in range(3, 0, -1):
+                        print(i)
+                    print("Twoje zamówienie jest już gotowe!")
+                    
+                    if self.banknot == self.mlotek_cena:
+                        self.portfel = self.portfel - self.mlotek_cena
+                        self.mlotek = self.mlotek - 1
+                        if self.mlotek == 0:
+                            self.produkty.remove("młotek")
+                        print("Brak reszty. Zamówienie przekazane.")
+                        print("Pozostała ilość pieniędzy:", self.portfel)
+                        print("wciśnij dowolny przycisk aby powrócić do menu")
+                        input()
+                        
+                    elif self.banknot > self.mlotek_cena:
+                        self.reszta = self.banknot - self.mlotek_cena
+                        print("Należna reszta w wysokości", self.reszta , "zł została umiszczona na bonie do wykorzystania podczas zakupów w inny dzień")
+                        self.portfel = self.portfel - self.banknot
+                        self.mlotek = self.mlotek - 1
+                        if self.mlotek == 0:
+                            self.produkty.remove("młotek")
+                        print("Pozostała ilość pieniędzy:", self.portfel)
+                        print("wciśnij dowolny przycisk aby powrócić do menu")
+                        input()
+                        
+                    else:
+                        print("podany banknot ma mniejsza wartość od ceny produktu.")
+                        print("Transakcja odrzucona. Odebranie zamówienia niemożliwe.")
+                        print("wciśnij dowolny przycisk aby powrócić do menu")
+                        input()
+                        
+                elif self.mlotek == 0:
+                    print("Przepraszamy, nie ma już tego produktu na stanie")
+                    print("wciśnij dowolny przycisk aby powrócić do menu")
+                    input()
+                    
+                elif self.portfel < self.mlotek_cena:
+                    print("Niestety nie stać cię na ten przedmiot")
+                    print("wciśnij dowolny przycisk aby powrócić do menu")
+                    input()
+                    
+sklep1 = Sklep_Narzedziowy()
+sklep1.menu()
+
+
